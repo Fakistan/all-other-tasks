@@ -1,8 +1,15 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { whatsappLink, type Destination } from "@/content/destinations";
+import type { Destination } from "@/content/destinations";
+import { journeysFor } from "@/content/journeys";
+import { whatsappLink } from "@/content/site";
+import { Price } from "./Currency";
+import MobileMenu from "./MobileMenu";
+import Needle from "./Needle";
+import { navLinks } from "./SiteHeader";
 
 const EASE = [0.76, 0, 0.24, 1] as const; // slow in, slow out — a page being turned
 const SLIDE_MS = 1000;
@@ -28,15 +35,11 @@ function slideVariants(reduced: boolean): Variants {
   };
 }
 
-function formatPkr(n: number) {
-  return "PKR " + n.toLocaleString("en-PK");
-}
-
 export default function DestinationSlider({ destinations }: { destinations: Destination[] }) {
   const [[index, direction], setSlide] = useState<[number, number]>([0, 1]);
   const [exploring, setExploring] = useState(false);
   const locked = useRef(false);
-  const touchStartY = useRef<number | null>(null);
+  const frameRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion() ?? false;
 
   const current = destinations[index];
@@ -66,29 +69,55 @@ export default function DestinationSlider({ destinations }: { destinations: Dest
     return () => window.removeEventListener("keydown", onKey);
   }, [exploring, go, index]);
 
-  const onWheel = (e: React.WheelEvent) => {
-    if (Math.abs(e.deltaY) < 30) return;
-    go(index + (e.deltaY > 0 ? 1 : -1));
-  };
+  // The slider owns vertical scrolling while the page is at the top. Past the
+  // last slide (or with the explore view open) the page scrolls normally.
+  useEffect(() => {
+    const el = frameRef.current;
+    if (!el) return;
+    const owns = (dir: number) =>
+      !exploring && window.scrollY < 4 && !(dir > 0 && index === count - 1) && !(dir < 0 && index === 0);
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartY.current === null) return;
-    const dy = touchStartY.current - e.changedTouches[0].clientY;
-    touchStartY.current = null;
-    if (Math.abs(dy) > 50) go(index + (dy > 0 ? 1 : -1));
-  };
+    const onWheel = (e: WheelEvent) => {
+      const dir = Math.sign(e.deltaY);
+      if (!dir || !owns(dir)) return;
+      e.preventDefault();
+      if (Math.abs(e.deltaY) >= 30) go(index + dir);
+    };
+
+    let startY: number | null = null;
+    const onTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (startY === null) return;
+      const dy = startY - e.touches[0].clientY;
+      if (Math.abs(dy) > 6 && owns(Math.sign(dy))) e.preventDefault();
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (startY === null) return;
+      const dy = startY - e.changedTouches[0].clientY;
+      startY = null;
+      if (Math.abs(dy) > 50 && owns(Math.sign(dy))) go(index + Math.sign(dy));
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd);
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [count, exploring, go, index]);
 
   return (
     <motion.section
+      ref={frameRef}
       className="frame"
       animate={{ backgroundColor: current.tone }}
       transition={{ duration: SLIDE_MS / 1000, ease: EASE }}
-      onWheel={onWheel}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
       aria-roledescription="carousel"
       aria-label="Destinations across Pakistan"
     >
@@ -110,16 +139,18 @@ export default function DestinationSlider({ destinations }: { destinations: Dest
         </AnimatePresence>
 
         <header className="topbar">
-          <a href="/" className="brand" aria-label="SAFIRÉ Voyages home">
+          <Link href="/" className="brand" aria-label="SAFIRÉ Voyages home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/wordmark-ivory.png" alt="SAFIRÉ" />
-          </a>
+          </Link>
           <nav className="nav" aria-label="Main">
-            <a href="#journeys">Journeys</a>
-            <a href="#services">More Services</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            {navLinks.map((l) => (
+              <Link key={l.href} href={l.href}>
+                {l.label}
+              </Link>
+            ))}
           </nav>
+          <MobileMenu light />
         </header>
 
         <AnimatePresence>
@@ -162,7 +193,7 @@ export default function DestinationSlider({ destinations }: { destinations: Dest
               <p className="counter">
                 <span>{String(index + 1).padStart(2, "0")}</span> / {String(count).padStart(2, "0")}
               </p>
-              <p className="hint">Scroll to travel</p>
+              <p className="hint">{index === count - 1 ? "Scroll to continue" : "Scroll to travel"}</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -294,13 +325,11 @@ function ExplorePanel({ destination: d, onClose }: { destination: Destination; o
       </motion.div>
 
       <div className="cards">
-        {d.journeys.map((j) => (
-          <motion.a
-            key={j.name}
+        {journeysFor(d.slug).map((j) => (
+          <MotionLink
+            key={j.slug}
             className="card"
-            href={whatsappLink(`Hello SAFIRÉ, I'm interested in "${j.name}" (${j.days} days).`)}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/journeys/${j.slug}`}
             variants={{
               hidden: { opacity: 0, x: 120, transition: { duration: 0.25 } },
               shown: { opacity: 1, x: 0, transition: { duration: 0.8, ease: EASE } },
@@ -310,21 +339,14 @@ function ExplorePanel({ destination: d, onClose }: { destination: Destination; o
             <div className="card__body">
               <h3>{j.name}</h3>
               <p>
-                {j.days} days · from {formatPkr(j.fromPkr)}
+                {j.days} days · from <Price pkr={j.fromPkr} />
               </p>
             </div>
-          </motion.a>
+          </MotionLink>
         ))}
       </div>
     </motion.div>
   );
 }
 
-function Needle() {
-  return (
-    <svg className="needle" viewBox="0 0 12 28" width="10" height="24" aria-hidden="true">
-      <path d="M6 0 10 14 6 28 2 14Z" fill="#D4AF5A" />
-      <circle cx="6" cy="14" r="1.6" fill="#F4EFE4" />
-    </svg>
-  );
-}
+const MotionLink = motion.create(Link);

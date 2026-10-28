@@ -1,4 +1,4 @@
-import { whatsappLink } from "@/content/destinations";
+import { whatsappLink } from "@/content/site";
 
 export default function WhatsAppButton({
   message = "Hello SAFIRÉ, I'd like to plan a journey.",
