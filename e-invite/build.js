@@ -28,3 +28,20 @@ for (const [k, [title, desc, color]] of Object.entries(pages)) {
 `);
 }
 console.log('built for', origin);
+
+// Deploy bundle: tiny HTML pages whose assets load from the public repo via jsDelivr.
+const asset = process.argv[3];
+if (asset) {
+  const dist = path.join(__dirname, 'dist');
+  for (const k of [...Object.keys(pages), '']) {
+    const src = path.join(__dirname, k, 'index.html');
+    let html = fs.readFileSync(src, 'utf8');
+    html = html.replace(/(href|src)="\.\.\//g, `$1="${asset}/`)
+      .replace('href="fonts/fonts.css"', `href="${asset}/fonts/fonts.css"`)
+      .replace(/src="og\//g, `src="${asset}/og/`)
+      .replace(/content="[^"]*\/og\/(\w+)\.jpg"/, `content="${asset}/og/$1.jpg"`);
+    fs.mkdirSync(path.join(dist, k), { recursive: true });
+    fs.writeFileSync(path.join(dist, k, 'index.html'), html);
+  }
+  console.log('dist written with assets from', asset);
+}
