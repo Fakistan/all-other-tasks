@@ -56,7 +56,44 @@ confident ("Hunza, in its quietest season."). Avoid shouting ("BEST PACKAGE!!! B
 | **Contact** | WhatsApp, phone, email, address, map, form |
 | **Legal** | Terms, cancellation/refund, privacy |
 
-## 5. Features
+## 5. Home hero: full-screen destination slider
+
+Based on the owner's reference video (big place names, the subject layered in front of the
+letters, vertical push transitions).
+
+**Slides (8):**
+
+| # | Destination | Shot idea (foreground layer in front of the title) |
+|---|---|---|
+| 1 | Hunza | Passu Cones ridge cutting through "HUNZA" |
+| 2 | Skardu | Shangrila / Upper Kachura lake, mountain line in front |
+| 3 | Fairy Meadows | Nanga Parbat peak rising through "FAIRY MEADOWS" |
+| 4 | K2 / Concordia | Karakoram peaks + a trekker seen from behind |
+| 5 | Swat | Kalam / Mahodand pines in front of the title |
+| 6 | Naran-Kaghan | Saif-ul-Malook shoreline / boat in front |
+| 7 | Neelum | Arang Kel wooden houses across the title |
+| 8 | Chitral / Kalash | Kalash valley houses or a figure from behind |
+
+**Behaviour:**
+
+1. **Layered title:** each slide = background photo → huge title in Bodoni Moda (Ivory) →
+   foreground cutout PNG on top, so peaks/people overlap the letters.
+2. **Vertical push transition:** the next slide slides up from the bottom and pushes the current
+   one out (~900ms, eased). Triggered by scroll wheel, swipe, arrow keys or the side indicator.
+3. **Ambient colour:** the page frame/background eases to each slide's tone (e.g. glacier blue,
+   meadow green, dusk sand) and stays within the brand palette mood.
+4. **Explore state:** clicking "Explore" shrinks the title to the top-left, fades in a 2–3 line
+   description, and slides in a row of photo cards (journeys for that region) from the right.
+5. **Gold needle** used as the slide indicator / progress marker.
+6. **Mobile:** swipe up/down; cards become a horizontal swipe row. Respect
+   `prefers-reduced-motion` (crossfade instead of push).
+
+**Assets:** free-licence stock photos (Unsplash/Pexels) per slide; foreground cutouts made with
+AI background removal; all images as optimised WebP/AVIF. Owner photos can replace them later.
+
+Tech: Framer Motion (or GSAP) for transitions inside the Next.js app.
+
+## 6. Features
 
 - Floating WhatsApp button on every page, with a pre-filled message per package
   (`https://wa.me/923462717484?text=…`).
@@ -67,22 +104,22 @@ confident ("Hunza, in its quietest season."). Avoid shouting ("BEST PACKAGE!!! B
 - SEO: page titles/descriptions, Open Graph images, sitemap, Google Business Profile.
 - Analytics (Vercel Analytics or GA4).
 
-## 6. Tech
+## 7. Tech
 
 - **Next.js** (static export where possible) + Tailwind CSS with the brand colours as tokens.
 - Packages stored as Markdown/MDX or JSON in `content/journeys/`.
 - Forms: a lightweight form service or a small serverless route that emails the lead.
 - Hosting on **Vercel**; `safire.pk` DNS pointed to Vercel, free HTTPS.
 
-## 7. Phases
+## 8. Phases
 
-1. **Phase 1 (MVP):** Home, Journeys + detail, More Services (one page), Contact, WhatsApp
+1. **Phase 1 (MVP):** Home (with the destination slider hero), Journeys + detail, More Services (one page), Contact, WhatsApp
    button, inquiry form, legal pages. Deploy to Vercel preview.
 2. **Phase 2:** Custom Journey form, separate Umrah / Visa pages, guest reviews, blog for
    SEO, connect `safire.pk`.
 3. **Phase 3 (optional):** Urdu version, online deposits/payments, admin panel or CMS.
 
-## 8. Still needed from the owner
+## 9. Still needed from the owner
 
 - [ ] Real packages: names, prices, itineraries, dates (placeholders until then)
 - [ ] Real trip photos (stock until then)
