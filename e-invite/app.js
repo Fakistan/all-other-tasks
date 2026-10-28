@@ -269,10 +269,12 @@ function build() {
   <main id="main">
     <section class="hero">
       <div class="hello">${hello}</div>
-      ${E.all ? `<div class="carousel" id="car">${LIST.map(k => `<div class="slide">${cardHTML(k)}<div class="cap">${EVENTS[k].title.toUpperCase()} · ${EVENTS[k].dateText.replace(/^\w+, /, '').toUpperCase()}</div></div>`).join('')}</div>
-      <div class="dots" id="dots">${LIST.map((k, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : cardHTML(KEY)}
+      ${E.all ? `<div class="tabs" id="tabs">${LIST.map((k, i) => `<button class="${i ? '' : 'on'}">${EVENTS[k].title}</button>`).join('')}</div>
+      <div class="car-wrap"><button class="arr prev" id="prev" aria-label="Previous event">‹</button><div class="carousel" id="car">${LIST.map(k => `<div class="slide">${cardHTML(k)}<div class="cap">${EVENTS[k].title.toUpperCase()} · ${EVENTS[k].dateText.replace(/^\w+, /, '').toUpperCase()}</div></div>`).join('')}</div>
+      <button class="arr next" id="next" aria-label="Next event">›</button></div>
+      <div class="dots" id="dots">${LIST.map((k, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}<span class="count-of" id="of">1 OF 3</span></div>` : cardHTML(KEY)}
       <div class="og-side"><div class="e">${E.all ? 'Shaadi' : E.title}</div><div class="n">${GROOM.toUpperCase()}</div><div class="d">${E.all ? 'NIKKAH · BARAT · WALIMA<br>' : ''}${E.dateText.toUpperCase()}</div><div class="t">TAP TO OPEN YOUR INVITATION</div></div>
-      <div class="hint">${E.all ? 'SWIPE TO SEE ALL THREE EVENTS<br>TAP A CARD TO TURN IT' : 'TAP THE CARD TO TURN IT'}<br><span class="arrow">↓</span> SCROLL FOR DETAILS</div>
+      <div class="hint">${E.all ? '<span class="mob">SWIPE OR USE THE TABS FOR EACH EVENT<br></span>TAP A CARD TO TURN IT' : 'TAP THE CARD TO TURN IT'}<br><span class="arrow">↓</span> SCROLL FOR DETAILS</div>
     </section>
     <section class="sec"><div class="eyebrow">COUNTING DOWN</div><h2>Until the ${EVENTS[LIST[0]].title}</h2>
       <div class="count" id="count"><div><b>0</b><small>DAYS</small></div><div><b>0</b><small>HOURS</small></div><div><b>0</b><small>MINS</small></div><div><b>0</b><small>SECS</small></div></div></section>
@@ -352,12 +354,25 @@ function tiltCard() {
 
 function carousel() {
   const car = $('#car'); if (!car) return;
-  const dots = [...document.querySelectorAll('#dots i')];
-  car.addEventListener('scroll', () => {
-    const i = Math.round(car.scrollLeft / car.clientWidth);
-    dots.forEach((d, j) => d.classList.toggle('on', i === j));
-  }, { passive: true });
-  dots.forEach((d, i) => d.addEventListener('click', () => car.scrollTo({ left: i * car.clientWidth, behavior: 'smooth' })));
+  const slides = [...car.children], dots = [...document.querySelectorAll('#dots i')], tabs = [...document.querySelectorAll('#tabs button')];
+  const at = i => slides[i].offsetLeft - (car.clientWidth - slides[i].offsetWidth) / 2;
+  const go = i => car.scrollTo({ left: at(Math.max(0, Math.min(slides.length - 1, i))), behavior: 'smooth' });
+  let cur = 0;
+  const sync = () => {
+    const mid = car.scrollLeft + car.clientWidth / 2;
+    cur = slides.reduce((best, s, i) => Math.abs(s.offsetLeft + s.offsetWidth / 2 - mid) < Math.abs(slides[best].offsetLeft + slides[best].offsetWidth / 2 - mid) ? i : best, 0);
+    dots.forEach((d, j) => d.classList.toggle('on', cur === j));
+    tabs.forEach((t, j) => t.classList.toggle('on', cur === j));
+    $('#of').textContent = `${cur + 1} OF ${slides.length}`;
+    $('#prev').disabled = cur === 0; $('#next').disabled = cur === slides.length - 1;
+  };
+  car.addEventListener('scroll', sync, { passive: true }); sync();
+  dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+  tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+  $('#prev').addEventListener('click', () => go(cur - 1));
+  $('#next').addEventListener('click', () => go(cur + 1));
+  // nudge once after opening so guests notice there are more cards
+  car.nudge = () => { if (car.scrollWidth <= car.clientWidth + 4) return; car.scrollTo({ left: 90, behavior: 'smooth' }); setTimeout(() => go(0), 650); };
 }
 
 function countdown() {
@@ -421,6 +436,7 @@ function openEnvelope() {
     document.body.classList.remove('locked');
     const m = $('#main'); m.classList.add('show', 'intro');
     scrollTo(0, 0);
+    const car = $('#car'); if (car && car.nudge) setTimeout(car.nudge, 1700);
   }, 2000);
   setTimeout(() => $('#scene').remove(), 2900);
 }
