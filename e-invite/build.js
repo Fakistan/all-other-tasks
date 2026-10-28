@@ -4,6 +4,7 @@ const origin = (process.argv[2] || 'https://example.com').replace(/\/$/, '');
 const pages = {
   nikkah: ['Nikkah of Hafiz Afaq Hassan', 'Thursday, 19th November 2026 · 7:00 PM · Serena Royal Wedding Hall, Peshawar', '#0b1330'],
   barat: ['Barat of Hafiz Afaq Hassan', 'Saturday, 21st November 2026 · 7:00 PM · Javed House, Peshawar', '#3a0711'],
+  all: ['Wedding of Hafiz Afaq Hassan', 'Nikkah · Barat · Walima · 19th – 22nd November 2026, Peshawar', '#17121c'],
   walima: ['Walima of Hafiz Afaq Hassan', 'Sunday, 22nd November 2026 · 6:30 PM · Elegance Arena Wedding Hall, Peshawar', '#f1dbd4'],
 };
 for (const [k, [title, desc, color]] of Object.entries(pages)) {

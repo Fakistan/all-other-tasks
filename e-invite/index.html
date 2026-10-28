@@ -45,6 +45,7 @@
   <div class="grid" id="grid"></div>
   <div class="tips">
     <b>How it works:</b> each card has its own link, so only the people you choose receive each event.
+    Use “All Three Events” for close family who are invited to everything.
     “Send on WhatsApp” opens WhatsApp with the message ready; pick the contact and press send.
     Leave the name empty to share one general link in a group.
   </div>
@@ -52,6 +53,7 @@
 <div class="toast" id="toast"></div>
 <script>
 const EV = [
+  ['all', 'All Three Events', 'Nikkah · Barat · Walima<br>19th – 22nd November 2026 · one link'],
   ['nikkah', 'Nikkah', 'Thursday · 19th November 2026<br>7:00 PM · Serena Royal Wedding Hall'],
   ['barat', 'Barat', 'Saturday · 21st November 2026<br>7:00 PM · Javed House'],
   ['walima', 'Walima', 'Sunday · 22nd November 2026<br>6:30 PM · Elegance Arena Wedding Hall'],
@@ -63,7 +65,7 @@ grid.innerHTML = EV.map(([k, t, w]) => `<div class="ev"><img src="og/${k}.jpg" a
   <div class="row"><a class="btn wa" data-wa="${k}" target="_blank" rel="noopener">${wa}SEND ON WHATSAPP</a>
   <button class="btn" data-copy="${k}">COPY LINK</button><a class="btn" data-open="${k}" target="_blank" rel="noopener">PREVIEW</a></div></div></div>`).join('');
 const url = k => { const n = to.value.trim(); return `${location.origin}/${k}/${n ? '?to=' + encodeURIComponent(n) : ''}`; };
-const msg = (k, t) => { const n = to.value.trim(); return `Assalamu Alaikum${n ? ' ' + n : ''}! 💌\nYou are cordially invited to the ${t} of Hafiz Afaq Hassan, In Sha Allah.\nTap to open your invitation:\n${url(k)}`; };
+const msg = (k, t) => { const n = to.value.trim(); return `Assalamu Alaikum${n ? ' ' + n : ''}! 💌\nYou are cordially invited to the ${k === 'all' ? 'wedding celebrations (Nikkah, Barat & Walima)' : t} of Hafiz Afaq Hassan, In Sha Allah.\nTap to open your invitation:\n${url(k)}`; };
 function refresh() {
   for (const [k, t] of EV) {
     document.querySelector(`[data-k="${k}"]`).textContent = url(k);

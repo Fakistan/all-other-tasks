@@ -28,6 +28,8 @@ const EVENTS = {
     seal: 'AH',
   },
 };
+for (const k in EVENTS) EVENTS[k].key = k;
+EVENTS.all = { title: 'Wedding', key: 'all', all: true, start: EVENTS.nikkah.start, dateText: '19th – 22nd November 2026', seal: 'AH' };
 const GROOM = 'Hafiz Afaq Hassan', FATHER = 'Al Haj M. Ishfaq Hassan';
 const PHONES = [['0331-8889595', '923318889595'], ['0332-9595951', '923329595951']];
 const BISM = 'بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيْمِ';
@@ -35,6 +37,7 @@ const DUA = 'بَارَكَ ٱللّٰهُ لَكُمَا وَبَارَكَ ع�
 
 const KEY = document.body.dataset.event;
 const E = EVENTS[KEY];
+const LIST = E.all ? ['nikkah', 'barat', 'walima'] : [KEY];
 const params = new URLSearchParams(location.search);
 const GUEST = (params.get('to') || '').trim().slice(0, 60);
 const OG = params.has('og');
@@ -212,7 +215,7 @@ const icon = {
   phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
 };
 
-function frontHTML() {
+function frontHTML(E) {
   const times = E.times.map(([k, v]) => `${k} ${v}`).join('<br>');
   return `<div class="content">
     <div class="c-bism gold">${BISM}</div>
@@ -266,22 +269,15 @@ function build() {
   <main id="main">
     <section class="hero">
       <div class="hello">${hello}</div>
-      <div class="stage"><div class="tilt" id="tilt"><div class="flipper" id="flip">
-        <div class="face front"><svg viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid slice"></svg>${frontHTML()}</div>
-        <div class="face back"><svg viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid slice"></svg>${backHTML()}</div>
-      </div></div></div>
-      <div class="og-side"><div class="e">${E.title}</div><div class="n">${GROOM.toUpperCase()}</div><div class="d">${E.dateText.toUpperCase()}</div><div class="t">TAP TO OPEN YOUR INVITATION</div></div>
-      <div class="hint">TAP THE CARD TO TURN IT<br><span class="arrow">↓</span> SCROLL FOR DETAILS</div>
+      ${E.all ? `<div class="carousel" id="car">${LIST.map(k => `<div class="slide">${cardHTML(k)}<div class="cap">${EVENTS[k].title.toUpperCase()} · ${EVENTS[k].dateText.replace(/^\w+, /, '').toUpperCase()}</div></div>`).join('')}</div>
+      <div class="dots" id="dots">${LIST.map((k, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : cardHTML(KEY)}
+      <div class="og-side"><div class="e">${E.all ? 'Shaadi' : E.title}</div><div class="n">${GROOM.toUpperCase()}</div><div class="d">${E.all ? 'NIKKAH · BARAT · WALIMA<br>' : ''}${E.dateText.toUpperCase()}</div><div class="t">TAP TO OPEN YOUR INVITATION</div></div>
+      <div class="hint">${E.all ? 'SWIPE TO SEE ALL THREE EVENTS<br>TAP A CARD TO TURN IT' : 'TAP THE CARD TO TURN IT'}<br><span class="arrow">↓</span> SCROLL FOR DETAILS</div>
     </section>
-    <section class="sec"><div class="eyebrow">COUNTING DOWN</div><h2>Until the ${E.title}</h2>
+    <section class="sec"><div class="eyebrow">COUNTING DOWN</div><h2>Until the ${EVENTS[LIST[0]].title}</h2>
       <div class="count" id="count"><div><b>0</b><small>DAYS</small></div><div><b>0</b><small>HOURS</small></div><div><b>0</b><small>MINS</small></div><div><b>0</b><small>SECS</small></div></div></section>
     <section class="sec"><div class="eyebrow">WHEN &amp; WHERE</div><h2>Join us</h2>
-      <div class="panel"><div class="big">${E.dateText.toUpperCase()}</div>
-        <div class="rows">${E.times.map(([k, v]) => `<div class="r"><span>${k.toUpperCase()}</span><b>${v}</b></div>`).join('')}</div>
-        <div class="big" style="margin-top:22px">${E.venue.toUpperCase()}</div><div class="mid">${E.addr}</div>
-        <div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(E.venue + ', ' + E.addr)}">${icon.pin}DIRECTIONS</a>
-          <a class="btn ghost" target="_blank" rel="noopener" href="${gcal()}">${icon.cal}GOOGLE CALENDAR</a>
-          <button class="btn ghost" id="ics">${icon.cal}APPLE / OUTLOOK</button></div></div></section>
+      ${LIST.map(k => panelHTML(EVENTS[k])).join('')}</section>
     <section class="sec"><div class="eyebrow">KINDLY RESPOND</div><h2>RSVP</h2>
       <p class="note">Your presence and prayers mean the world to us.<br>Let us know you're coming, In Sha Allah.</p>
       <div class="btns">${PHONES.map(([n, w]) => `<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${w}?text=${encodeURIComponent(rsvpText())}">${icon.wa}${n}</a>`).join('')}</div>
@@ -289,50 +285,79 @@ function build() {
     <footer><div class="sig">With love,</div><div class="fam">THE HASSAN FAMILY</div></footer>
   </main>
   <div class="toast" id="toast"></div>`);
-  document.querySelectorAll('.face > svg').forEach(s => ART[KEY](s));
+  document.querySelectorAll('.face > svg').forEach(s => ART[s.dataset.art](s));
+}
+
+function cardHTML(k) {
+  const svg = `<svg viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid slice" data-art="${k}"></svg>`;
+  return `<div class="stage"><div class="tilt"><div class="flipper t-${k}">
+    <div class="face front">${svg}${frontHTML(EVENTS[k])}</div>
+    <div class="face back">${svg}${backHTML()}</div></div></div></div>`;
+}
+function panelHTML(ev) {
+  return `<div class="panel">${E.all ? `<div class="eyebrow" style="margin-bottom:10px">${ev.title.toUpperCase()}</div>` : ''}<div class="big">${ev.dateText.toUpperCase()}</div>
+    <div class="rows">${ev.times.map(([k, v]) => `<div class="r"><span>${k.toUpperCase()}</span><b>${v}</b></div>`).join('')}</div>
+    <div class="big" style="margin-top:22px">${ev.venue.toUpperCase()}</div><div class="mid">${ev.addr}</div>
+    <div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.venue + ', ' + ev.addr)}">${icon.pin}DIRECTIONS</a>
+      <a class="btn ghost" target="_blank" rel="noopener" href="${gcal(ev)}">${icon.cal}GOOGLE CALENDAR</a>
+      <button class="btn ghost" data-ics="${ev.key}">${icon.cal}APPLE / OUTLOOK</button></div></div>`;
 }
 
 function rsvpText() {
-  return `Assalamu Alaikum! ${GUEST ? GUEST + ' will' : 'I will'}, In Sha Allah, attend the ${E.title} of ${GROOM} on ${E.dateText}. JazakAllah khair for the invitation!`;
+  return `Assalamu Alaikum! ${GUEST ? GUEST + ' will' : 'I will'}, In Sha Allah, attend the ${E.all ? 'wedding celebrations' : E.title} of ${GROOM} on ${E.dateText}. JazakAllah khair for the invitation!`;
 }
 const utc = s => new Date(s).toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
-function gcal() {
-  const q = new URLSearchParams({ action: 'TEMPLATE', text: `${E.title} of ${GROOM}`, dates: `${utc(E.start)}/${utc(E.end)}`, details: `${E.times.map(t => t.join(' ')).join(', ')}\nInvitation: ${location.origin}${location.pathname}`, location: `${E.venue}, ${E.addr}` });
+function gcal(ev) {
+  const q = new URLSearchParams({ action: 'TEMPLATE', text: `${ev.title} of ${GROOM}`, dates: `${utc(ev.start)}/${utc(ev.end)}`, details: `${ev.times.map(t => t.join(' ')).join(', ')}\nInvitation: ${location.origin}${location.pathname}`, location: `${ev.venue}, ${ev.addr}` });
   return 'https://calendar.google.com/calendar/render?' + q;
 }
-function ics() {
-  const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Hassan Family//Invite//EN', 'BEGIN:VEVENT', `UID:${KEY}-afaq-2026@invite`, `DTSTAMP:${utc(new Date().toISOString())}`,
-    `DTSTART:${utc(E.start)}`, `DTEND:${utc(E.end)}`, `SUMMARY:${E.title} of ${GROOM}`, `LOCATION:${E.venue}\\, ${E.addr.replace(/,/g, '\\,')}`,
-    `DESCRIPTION:${E.times.map(t => t.join(' ')).join('\\, ')}`, 'BEGIN:VALARM', 'TRIGGER:-PT3H', 'ACTION:DISPLAY', 'DESCRIPTION:Reminder', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+function ics(ev) {
+  const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Hassan Family//Invite//EN', 'BEGIN:VEVENT', `UID:${ev.key}-afaq-2026@invite`, `DTSTAMP:${utc(new Date().toISOString())}`,
+    `DTSTART:${utc(ev.start)}`, `DTEND:${utc(ev.end)}`, `SUMMARY:${ev.title} of ${GROOM}`, `LOCATION:${ev.venue}\\, ${ev.addr.replace(/,/g, '\\,')}`,
+    `DESCRIPTION:${ev.times.map(t => t.join(' ')).join('\\, ')}`, 'BEGIN:VALARM', 'TRIGGER:-PT3H', 'ACTION:DISPLAY', 'DESCRIPTION:Reminder', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([body], { type: 'text/calendar' }));
-  a.download = `${E.title}-Afaq-Hassan.ics`; a.click();
+  a.download = `${ev.title}-Afaq-Hassan.ics`; a.click();
 }
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2200); }
 
 /* ---------------- interactions ---------------- */
 function tiltCard() {
-  const tilt = $('#tilt'), flip = $('#flip'), shines = document.querySelectorAll('.shine');
+  const tilts = [...document.querySelectorAll('.tilt')], shines = document.querySelectorAll('.shine');
   let tx = 0, ty = 0, cx = 0, cy = 0, pointer = false, gyro = false, t0 = performance.now();
   const set = (x, y) => { tx = x; ty = y; };
-  tilt.addEventListener('pointermove', e => {
-    if (e.pointerType === 'touch') return;
-    const r = tilt.getBoundingClientRect(); pointer = true;
-    set(((e.clientX - r.left) / r.width - .5) * 2, ((e.clientY - r.top) / r.height - .5) * 2);
-  });
-  tilt.addEventListener('pointerleave', () => { pointer = false; });
+  for (const tilt of tilts) {
+    tilt.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      const r = tilt.getBoundingClientRect(); pointer = true;
+      set(((e.clientX - r.left) / r.width - .5) * 2, ((e.clientY - r.top) / r.height - .5) * 2);
+    });
+    tilt.addEventListener('pointerleave', () => { pointer = false; });
+    const flip = tilt.querySelector('.flipper');
+    flip.addEventListener('click', () => flip.classList.toggle('flipped'));
+  }
   window.addEventListener('deviceorientation', e => {
     if (e.gamma == null) return; gyro = true;
     set(Math.max(-1, Math.min(1, e.gamma / 25)), Math.max(-1, Math.min(1, (e.beta - 40) / 25)));
   });
-  flip.addEventListener('click', () => flip.classList.toggle('flipped'));
   (function loop(now) {
     if (!pointer && !gyro) { const t = (now - t0) / 1000; tx = Math.sin(t * .7) * .35; ty = Math.cos(t * .9) * .25; }
     cx += (tx - cx) * .08; cy += (ty - cy) * .08;
-    tilt.style.transform = `rotateY(${(cx * 12).toFixed(2)}deg) rotateX(${(-cy * 10).toFixed(2)}deg)`;
+    const tr = `rotateY(${(cx * 12).toFixed(2)}deg) rotateX(${(-cy * 10).toFixed(2)}deg)`;
+    tilts.forEach(t => { t.style.transform = tr; });
     shines.forEach(s => { s.style.setProperty('--sx', `${50 + cx * 40}%`); s.style.setProperty('--sy', `${30 + cy * 40}%`); s.style.setProperty('--sw', `${50 + cx * 30}%`); });
     requestAnimationFrame(loop);
   })(t0);
+}
+
+function carousel() {
+  const car = $('#car'); if (!car) return;
+  const dots = [...document.querySelectorAll('#dots i')];
+  car.addEventListener('scroll', () => {
+    const i = Math.round(car.scrollLeft / car.clientWidth);
+    dots.forEach((d, j) => d.classList.toggle('on', i === j));
+  }, { passive: true });
+  dots.forEach((d, i) => d.addEventListener('click', () => car.scrollTo({ left: i * car.clientWidth, behavior: 'smooth' })));
 }
 
 function countdown() {
@@ -357,8 +382,9 @@ function particles() {
   let W, H, P = [];
   const resize = () => { W = c.width = innerWidth * dpr; H = c.height = innerHeight * dpr; };
   resize(); addEventListener('resize', resize);
-  const R = Math.random, n = KEY === 'nikkah' ? 70 : 28;
-  const mk = (init) => ({ x: R() * W, y: init ? R() * H : -20 * dpr, s: (KEY === 'nikkah' ? 1 + R() * 1.6 : 6 + R() * 7) * dpr, vy: (KEY === 'nikkah' ? .05 + R() * .15 : .4 + R() * .7) * dpr, vx: (R() - .5) * .4 * dpr, r: R() * 6, vr: (R() - .5) * .04, ph: R() * 6, hue: R() });
+  const STAR = KEY === 'nikkah' || KEY === 'all';
+  const R = Math.random, n = STAR ? 70 : 28;
+  const mk = (init) => ({ x: R() * W, y: init ? R() * H : -20 * dpr, s: (STAR ? 1 + R() * 1.6 : 6 + R() * 7) * dpr, vy: (STAR ? .05 + R() * .15 : .4 + R() * .7) * dpr, vx: (R() - .5) * .4 * dpr, r: R() * 6, vr: (R() - .5) * .04, ph: R() * 6, hue: R() });
   for (let i = 0; i < n; i++) P.push(mk(true));
   const cols = KEY === 'barat' ? ['#f7a823', '#e07c06', '#ffc247', '#c2183a'] : ['#f3c3bb', '#e8a2a0', '#f9e0da', '#d98c86'];
   (function draw(t) {
@@ -367,7 +393,7 @@ function particles() {
       p.y += p.vy; p.x += p.vx + Math.sin(t / 1400 + p.ph) * .3 * dpr; p.r += p.vr;
       if (p.y > H + 30 * dpr) Object.assign(p, mk(false));
       x.save(); x.translate(p.x, p.y);
-      if (KEY === 'nikkah') {
+      if (STAR) {
         x.globalAlpha = .35 + .65 * Math.abs(Math.sin(t / 900 + p.ph));
         x.fillStyle = p.hue > .7 ? '#f3dba0' : '#ffffff';
         x.beginPath(); x.arc(0, 0, p.s, 0, 7); x.fill();
@@ -407,11 +433,11 @@ if (OG) {
   document.body.classList.add('locked');
   $('#seal').addEventListener('click', openEnvelope);
   $('#env').addEventListener('click', openEnvelope);
-  $('#ics').addEventListener('click', ics);
+  document.querySelectorAll('[data-ics]').forEach(b => b.addEventListener('click', () => ics(EVENTS[b.dataset.ics])));
   $('#share').addEventListener('click', async () => {
     const url = location.origin + location.pathname;
     try { if (navigator.share) { await navigator.share({ title: document.title, text: `You're invited to the ${E.title} of ${GROOM}`, url }); return; } } catch (e) { return; }
     try { await navigator.clipboard.writeText(url); toast('LINK COPIED'); } catch (e) { prompt('Copy this link', url); }
   });
-  tiltCard(); countdown(); reveal(); particles();
+  tiltCard(); carousel(); countdown(); reveal(); particles();
 }

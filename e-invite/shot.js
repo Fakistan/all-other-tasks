@@ -3,7 +3,7 @@ const { chromium } = require('playwright'); const path = require('path');
 (async () => {
   const b = await chromium.launch(); const root = 'file://' + __dirname;
   const mode = process.argv[2] || 'review';
-  for (const k of ['nikkah', 'barat', 'walima']) {
+  for (const k of (process.argv[3] || 'nikkah,barat,walima,all').split(',')) {
     if (mode === 'og') {
       const p = await b.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
       await p.goto(`${root}/${k}/index.html?og`); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(400);
@@ -19,7 +19,7 @@ const { chromium } = require('playwright'); const path = require('path');
       await p.screenshot({ path: `${process.env.OUT}/${k}-2opening.png` });
       await p.waitForTimeout(2600);
       await p.screenshot({ path: `${process.env.OUT}/${k}-3card.png` });
-      await p.click('#flip', { force: true }); await p.waitForTimeout(1300);
+      await p.click('.flipper', { force: true }); await p.waitForTimeout(1300);
       await p.screenshot({ path: `${process.env.OUT}/${k}-4back.png` });
       await p.evaluate(() => { document.querySelectorAll('.sec').forEach(s => s.classList.add('in')); });
       await p.screenshot({ path: `${process.env.OUT}/${k}-5full.png`, fullPage: true });
