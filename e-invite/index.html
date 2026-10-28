@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send Invites · Afaq's Wedding</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1b1420">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root { --bg:#17121c; --card:#221a29; --line:rgba(217,181,109,.28); --gold:#d9b56d; --gold2:#f3dba0; --text:#f3ead8; --muted:#a99db0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:radial-gradient(ellipse 100% 60% at 50% 0%, #2d2238, var(--bg)) fixed var(--bg); color:var(--text); font-family:'Cormorant Garamond', serif; min-height:100vh; padding:40px 16px 80px; }
+  .wrap { max-width:980px; margin:0 auto; }
+  header { text-align:center; }
+  .eyebrow { font-family:'Cinzel', serif; font-size:12px; letter-spacing:.4em; color:var(--gold); }
+  h1 { font-family:'Great Vibes', cursive; font-weight:400; font-size:clamp(48px, 12vw, 72px); color:var(--gold2); line-height:1.1; margin-top:6px; }
+  .lead { font-size:20px; color:var(--muted); max-width:560px; margin:8px auto 0; line-height:1.4; }
+  .guest { max-width:520px; margin:28px auto 0; }
+  label { display:block; font-family:'Cinzel', serif; font-size:12px; letter-spacing:.3em; color:var(--muted); margin-bottom:8px; text-align:center; }
+  input { width:100%; padding:16px 18px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); font:inherit; font-size:22px; text-align:center; outline:none; }
+  input:focus { border-color:var(--gold); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:18px; margin-top:34px; }
+  .ev { background:var(--card); border:1px solid var(--line); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; }
+  .ev img { width:100%; aspect-ratio:1200/630; object-fit:cover; display:block; }
+  .ev .body { padding:18px; display:flex; flex-direction:column; gap:12px; flex:1; }
+  .ev h3 { font-family:'Great Vibes', cursive; font-weight:400; font-size:42px; color:var(--gold2); line-height:1; }
+  .ev .when { font-family:'Cinzel', serif; font-size:13px; letter-spacing:.14em; color:var(--muted); line-height:1.6; }
+  .link { font-family:ui-monospace, monospace; font-size:12px; color:var(--muted); background:rgba(0,0,0,.25); padding:9px 10px; border-radius:10px; word-break:break-all; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:auto; }
+  .btn { display:flex; align-items:center; justify-content:center; gap:7px; padding:12px 10px; border-radius:999px; font-family:'Cinzel', serif; font-size:12px; letter-spacing:.12em; font-weight:600; border:1px solid var(--line); color:var(--text); background:transparent; cursor:pointer; text-decoration:none; }
+  .btn.wa { grid-column:1 / -1; background:linear-gradient(120deg,#1faa59,#25d366); border:0; color:#fff; font-size:13px; }
+  .btn svg { width:16px; height:16px; }
+  .tips { margin-top:40px; border:1px solid var(--line); border-radius:18px; padding:20px 22px; color:var(--muted); font-size:19px; line-height:1.5; }
+  .tips b { color:var(--text); font-weight:600; }
+  .toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,30px); opacity:0; background:#000c; color:#fff; padding:10px 18px; border-radius:999px; font-family:'Cinzel', serif; font-size:12px; letter-spacing:.15em; transition:all .3s; }
+  .toast.on { opacity:1; transform:translate(-50%,0); }
+</style></head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">THE WEDDING OF HAFIZ AFAQ HASSAN</div>
+    <h1>Send an Invitation</h1>
+    <p class="lead">Type the guest's name, then send the right event straight to their WhatsApp. Their name appears on the envelope when they open it.</p>
+  </header>
+  <div class="guest"><label for="to">GUEST NAME (OPTIONAL)</label><input id="to" placeholder="e.g. Khan Family" maxlength="60" autocomplete="off"></div>
+  <div class="grid" id="grid"></div>
+  <div class="tips">
+    <b>How it works:</b> each card has its own link, so only the people you choose receive each event.
+    “Send on WhatsApp” opens WhatsApp with the message ready; pick the contact and press send.
+    Leave the name empty to share one general link in a group.
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const EV = [
+  ['nikkah', 'Nikkah', 'Thursday · 19th November 2026<br>7:00 PM · Serena Royal Wedding Hall'],
+  ['barat', 'Barat', 'Saturday · 21st November 2026<br>7:00 PM · Javed House'],
+  ['walima', 'Walima', 'Sunday · 22nd November 2026<br>6:30 PM · Elegance Arena Wedding Hall'],
+];
+const wa = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.4 1.8 2.2 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>';
+const grid = document.getElementById('grid'), to = document.getElementById('to');
+grid.innerHTML = EV.map(([k, t, w]) => `<div class="ev"><img src="og/${k}.jpg" alt="${t} card"><div class="body">
+  <h3>${t}</h3><div class="when">${w}</div><div class="link" data-k="${k}"></div>
+  <div class="row"><a class="btn wa" data-wa="${k}" target="_blank" rel="noopener">${wa}SEND ON WHATSAPP</a>
+  <button class="btn" data-copy="${k}">COPY LINK</button><a class="btn" data-open="${k}" target="_blank" rel="noopener">PREVIEW</a></div></div></div>`).join('');
+const url = k => { const n = to.value.trim(); return `${location.origin}/${k}/${n ? '?to=' + encodeURIComponent(n) : ''}`; };
+const msg = (k, t) => { const n = to.value.trim(); return `Assalamu Alaikum${n ? ' ' + n : ''}! 💌\nYou are cordially invited to the ${t} of Hafiz Afaq Hassan, In Sha Allah.\nTap to open your invitation:\n${url(k)}`; };
+function refresh() {
+  for (const [k, t] of EV) {
+    document.querySelector(`[data-k="${k}"]`).textContent = url(k);
+    document.querySelector(`[data-wa="${k}"]`).href = 'https://wa.me/?text=' + encodeURIComponent(msg(k, t));
+    document.querySelector(`[data-open="${k}"]`).href = url(k);
+  }
+}
+to.addEventListener('input', refresh); refresh();
+grid.addEventListener('click', async e => {
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  const k = b.dataset.copy, t = EV.find(x => x[0] === k)[1];
+  try { await navigator.clipboard.writeText(msg(k, t)); toast('INVITE COPIED'); } catch { prompt('Copy this', msg(k, t)); }
+});
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2000); }
+</script>
+</body></html>
