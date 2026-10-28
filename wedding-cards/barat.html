@@ -1,0 +1,212 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Barat Card</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root { --maroon:#6e1420; --wine:#4a0c14; --gold:#a77b33; --ink:#4a2a1e; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  #card { position:relative; width:1080px; height:1620px; overflow:hidden; background:#d8b7b3; }
+  svg.layer { position:absolute; inset:0; width:1080px; height:1620px; }
+  #text { position:absolute; left:240px; width:600px; top:392px; text-align:center; color:var(--ink); font-family:'Cormorant Garamond', serif; }
+  .gold { background:linear-gradient(100deg,#7a5420 0%,#c99a4c 30%,#f0d89a 50%,#b58640 70%,#7a5420 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .bism { font-family:'Amiri', serif; font-size:40px; line-height:1.3; }
+  .it { font-style:italic; font-size:27px; color:#6a4a3a; line-height:1.25; }
+  .host { font-family:'Cinzel', serif; font-size:34px; font-weight:600; letter-spacing:.06em; color:var(--maroon); margin-top:4px; }
+  .host small { font-size:20px; letter-spacing:.1em; }
+  h1 { font-family:'Cinzel Decorative', serif; font-weight:700; font-size:112px; line-height:1; letter-spacing:.06em; color:var(--maroon); margin:16px 0 4px; padding-left:.06em; text-shadow:0 2px 0 rgba(167,123,51,.35); }
+  .cer { font-family:'Cinzel', serif; letter-spacing:.5em; font-size:20px; color:var(--gold); font-weight:600; padding-left:.5em; }
+  .name { font-family:'Great Vibes', cursive; font-size:92px; line-height:1.1; margin-top:8px; padding:0 16px; }
+  .father { font-size:31px; font-weight:600; color:var(--ink); }
+  .father span { font-family:'Cinzel', serif; font-size:17px; letter-spacing:.2em; color:#8a6a55; margin-right:8px; font-weight:500; }
+  .bride { font-size:27px; font-style:italic; color:#6a4a3a; margin-top:6px; }
+  .bride b { font-style:normal; font-weight:600; color:var(--ink); }
+  .row { display:grid; grid-template-columns:1fr 1px 1.3fr 1px 1fr; align-items:center; margin:30px 10px 0; }
+  .row .sep { height:96px; background:linear-gradient(180deg,transparent,#b8904a,transparent); }
+  .row .k { font-family:'Cinzel', serif; font-size:15px; letter-spacing:.32em; color:var(--gold); font-weight:600; padding-left:.32em; }
+  .row .v { font-family:'Cinzel', serif; font-size:21px; letter-spacing:.08em; color:var(--maroon); font-weight:600; margin-top:4px; }
+  .row .big { font-family:'Cinzel', serif; font-size:56px; line-height:1; color:var(--maroon); font-weight:600; }
+  .row .big sup { font-size:22px; vertical-align:top; position:relative; top:8px; }
+  .venue { font-family:'Cinzel', serif; font-size:31px; font-weight:700; letter-spacing:.12em; color:var(--maroon); margin-top:26px; }
+  .addr { font-family:'Cinzel', serif; font-size:14.5px; letter-spacing:.2em; color:#6a4a3a; margin-top:6px; font-weight:500; }
+  .contact { font-family:'Cinzel', serif; font-size:16px; letter-spacing:.12em; color:#6a4a3a; margin-top:12px; font-weight:500; }
+  .divider { display:flex; align-items:center; justify-content:center; gap:12px; margin:12px auto 0; }
+  .divider i { width:90px; height:1px; background:linear-gradient(90deg,transparent,#a77b33); }
+  .divider i:last-child { transform:scaleX(-1); }
+  .divider b { color:#a77b33; font-size:16px; }
+</style></head>
+<body>
+<div id="card">
+  <svg class="layer" id="art" viewBox="0 0 1080 1620"></svg>
+  <svg class="layer" id="over" viewBox="0 0 1080 1620"></svg>
+  <div id="text">
+    <div class="bism gold">بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيْمِ</div>
+    <div class="it" style="margin-top:6px">The Family of</div>
+    <div class="host">HAJI M. HASSAN <small>(LATE)</small></div>
+    <div class="it" style="margin-top:6px">request the honour of your presence<br>at the auspicious</div>
+    <h1>Barat</h1>
+    <div class="cer">CEREMONY</div>
+    <div class="it" style="margin-top:12px">of their beloved grandson</div>
+    <div class="name gold">Hafiz Afaq Hassan</div>
+    <div class="father"><span>S/O</span>Al Haj M. Ishfaq Hassan</div>
+    <div class="bride">with <b>D/o Mr. Arshad Kamal</b></div>
+    <div class="row">
+      <div><div class="k">SATURDAY</div></div>
+      <div class="sep"></div>
+      <div><div class="big">21<sup>ST</sup></div><div class="v">NOVEMBER 2026</div></div>
+      <div class="sep"></div>
+      <div><div class="k">RECEPTION</div><div class="v">7:00 PM</div></div>
+    </div>
+    <div class="divider"><i></i><b>❖</b><i></i></div>
+    <div class="venue">JAVED HOUSE</div>
+    <div class="addr">GULGASHT COLONY · CIVIL QUARTERS · PESHAWAR</div>
+    <div class="contact">0331-8889595 &nbsp;|&nbsp; 0332-9595951</div>
+  </div>
+</div>
+<script src="decor.js"></script>
+<script>
+const R = rng(21112026);
+const art = document.getElementById('art'), over = document.getElementById('over');
+const D = `
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a5420"/><stop offset=".3" stop-color="#e9cf8e"/><stop offset=".55" stop-color="#a87a35"/><stop offset=".8" stop-color="#f3dea6"/><stop offset="1" stop-color="#7a5420"/></linearGradient>
+  <linearGradient id="fold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3d0710"/><stop offset=".45" stop-color="#9b2232"/><stop offset=".6" stop-color="#b0303f"/><stop offset="1" stop-color="#4a0a14"/></linearGradient>
+  <linearGradient id="valance" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a0a14"/><stop offset=".6" stop-color="#9e2433"/><stop offset="1" stop-color="#5a0e18"/></linearGradient>
+  <linearGradient id="redPetal" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4f0812"/><stop offset=".6" stop-color="#a8182a"/><stop offset="1" stop-color="#d6384a"/></linearGradient>
+  <radialGradient id="pearl" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#f3e4e2"/><stop offset="1" stop-color="#b9979a"/></radialGradient>
+  <radialGradient id="crystal" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#fffef5"/><stop offset=".6" stop-color="#f0d9a0"/><stop offset="1" stop-color="#a8823f"/></radialGradient>
+  <radialGradient id="cardGlow" cx="50%" cy="40%" r="65%"><stop offset="0" stop-color="#fbf1dc"/><stop offset=".75" stop-color="#f1e0c0"/><stop offset="1" stop-color="#e2c9a0"/></radialGradient>
+  <radialGradient id="lightGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3c4" stop-opacity=".9"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient>
+  <clipPath id="cardClip"><rect x="110" y="110" width="860" height="1400"/></clipPath>
+  <filter id="blur40"><feGaussianBlur stdDeviation="40"/></filter>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="6" dy="22" stdDeviation="22" flood-color="#5a2a2a" flood-opacity=".45"/></filter>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#2a0005" flood-opacity=".45"/></filter>
+  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="5"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .3  0 0 0 0 .2  1 0 0 0 -.4"/></filter>`;
+el('defs', {}, art).innerHTML = D;
+el('defs', {}, over).innerHTML = D;
+
+// Satin backdrop: soft highlight sweeps.
+const sat = el('g', { filter: 'url(#blur40)' }, art);
+for (const [d, c, o] of [
+  ['M-100 300 C300 200 600 500 1200 250 L1200 420 C700 640 300 380 -100 520Z', '#f2dcd8', .8],
+  ['M-100 900 C300 760 700 1100 1200 860 L1200 980 C700 1220 300 900 -100 1040Z', '#f5e2de', .7],
+  ['M-100 1400 C400 1250 700 1560 1200 1380 L1200 1500 C700 1700 300 1440 -100 1560Z', '#f0d6d2', .7],
+  ['M-100 620 C300 520 700 760 1200 600 L1200 680 C700 840 300 640 -100 720Z', '#b8908d', .5],
+  ['M-100 1180 C300 1080 700 1320 1200 1160 L1200 1240 C700 1400 300 1200 -100 1280Z', '#b8908d', .45],
+]) el('path', { d, fill: c, opacity: o }, sat);
+
+// Envelope behind the card.
+const env = el('g', { transform: 'rotate(-7 540 810)' }, art);
+el('rect', { x: 150, y: 60, width: 880, height: 1100, rx: 6, fill: '#ead3cf', filter: 'url(#shadow)' }, env);
+el('path', { d: 'M150 60 L590 420 L1030 60', fill: 'none', stroke: '#d9bcb7', 'stroke-width': 3 }, env);
+
+// Pearl strand down the left edge.
+for (let i = 0; i < 46; i++) {
+  const t = i / 45, y = 80 + t * 1500, x = 52 + Math.sin(t * 5.5) * 22;
+  el('circle', { cx: x, cy: y, r: i === 14 ? 34 : 15, fill: 'url(#pearl)', filter: 'url(#soft)' }, art);
+}
+
+// The card itself.
+el('rect', { x: 110, y: 110, width: 860, height: 1400, fill: 'url(#cardGlow)', filter: 'url(#shadow)' }, art);
+const C = el('g', { 'clip-path': 'url(#cardClip)' }, art);
+el('rect', { x: 110, y: 110, width: 860, height: 1400, filter: 'url(#grain)', opacity: .55 }, C);
+
+// Mughal palace silhouette near the bottom.
+const pal = el('g', { fill: '#dcc39b', opacity: .75 }, C);
+function dome(cx, base, w, h) {
+  el('path', { d: `M${cx - w / 2} ${base} C${cx - w / 2} ${base - h * .7} ${cx - w * .15} ${base - h * .85} ${cx} ${base - h} C${cx + w * .15} ${base - h * .85} ${cx + w / 2} ${base - h * .7} ${cx + w / 2} ${base}Z` }, pal);
+  el('rect', { x: cx - 2, y: base - h - 26, width: 4, height: 28 }, pal);
+}
+function minaret(x, top) {
+  el('rect', { x: x - 11, y: top, width: 22, height: 1510 - top }, pal);
+  el('rect', { x: x - 17, y: top + 40, width: 34, height: 8 }, pal);
+  el('rect', { x: x - 16, y: top + 130, width: 32, height: 7 }, pal);
+  dome(x, top + 2, 30, 34);
+}
+el('rect', { x: 330, y: 1270, width: 420, height: 240 }, pal);
+el('rect', { x: 440, y: 1170, width: 200, height: 110 }, pal);
+dome(540, 1172, 220, 190);
+dome(395, 1272, 90, 70); dome(685, 1272, 90, 70);
+minaret(300, 1090); minaret(780, 1090);
+minaret(200, 1220); minaret(880, 1220);
+// arches cut out of the palace base
+for (const [x, w, h] of [[540, 70, 150], [440, 44, 100], [640, 44, 100], [370, 30, 70], [710, 30, 70]]) {
+  el('path', { d: `M${x - w / 2} 1510 L${x - w / 2} ${1510 - h + w * .5} C${x - w / 2} ${1510 - h + w * .1} ${x - 4} ${1510 - h + 8} ${x} ${1510 - h} C${x + 4} ${1510 - h + 8} ${x + w / 2} ${1510 - h + w * .1} ${x + w / 2} ${1510 - h + w * .5} L${x + w / 2} 1510Z`, fill: '#ecdcbc' }, C);
+}
+
+// Velvet curtains: folds converge on a tieback.
+function curtain(g, mirror) {
+  const yt = 880, top = 110, bot = 1515;
+  const inner = y => {
+    if (y <= yt) { const t = (y - top) / (yt - top); return 360 - 200 * Math.pow(Math.sin(t * Math.PI / 2), 1.4); }
+    const t = (y - yt) / (bot - yt); return 160 + 62 * Math.sqrt(t);
+  };
+  const outer = () => 96;
+  const ys = []; for (let y = top; y <= bot; y += 10) ys.push(y);
+  const X = x => mirror ? 1080 - x : x;
+  const N = 7;
+  for (let k = 0; k < N; k++) {
+    const a = k / N, b = (k + 1) / N;
+    const left = ys.map(y => [outer() + (inner(y) - outer()) * a, y]);
+    const right = ys.map(y => [outer() + (inner(y) - outer()) * b, y]).reverse();
+    const pts = left.concat(right).map(([x, y]) => `${X(x).toFixed(1)} ${y}`);
+    el('path', { d: 'M' + pts.join(' L') + 'Z', fill: 'url(#fold)' }, g);
+  }
+  // gold trim along the inner edge
+  el('path', { d: 'M' + ys.map(y => `${X(inner(y)).toFixed(1)} ${y}`).join(' L'), fill: 'none', stroke: 'url(#gold)', 'stroke-width': 6 }, g);
+  // tieback with tassel
+  const tx = X(150);
+  el('ellipse', { cx: tx, cy: yt, rx: 72, ry: 16, fill: 'none', stroke: 'url(#gold)', 'stroke-width': 10, filter: 'url(#soft)' }, g);
+  el('circle', { cx: X(205), cy: yt + 6, r: 15, fill: 'url(#gold)' }, g);
+  el('path', { d: `M${X(205) - 10} ${yt + 18} L${X(205) - 20} ${yt + 110} L${X(205) + 20} ${yt + 110} L${X(205) + 10} ${yt + 18}Z`, fill: 'url(#gold)', filter: 'url(#soft)' }, g);
+  for (let i = 0; i < 9; i++) el('line', { x1: X(205) - 18 + i * 4.5, y1: yt + 60, x2: X(205) - 18 + i * 4.5, y2: yt + 110, stroke: '#7a5420', 'stroke-width': 1 }, g);
+}
+curtain(C, false); curtain(C, true);
+
+// Swagged valance with fringe across the top.
+const V = el('g', { filter: 'url(#soft)' }, C);
+el('rect', { x: 100, y: 100, width: 880, height: 70, fill: 'url(#valance)' }, V);
+const sw = [[110, 400], [380, 700], [680, 970]];
+for (const [a, b] of sw) {
+  const m = (a + b) / 2;
+  el('path', { d: `M${a} 150 Q${m} 330 ${b} 150 L${b} 120 Q${m} 250 ${a} 120Z`, fill: 'url(#valance)' }, V);
+  el('path', { d: `M${a} 150 Q${m} 330 ${b} 150`, fill: 'none', stroke: 'url(#gold)', 'stroke-width': 5 }, V);
+  el('path', { d: `M${a + 6} 162 Q${m} 344 ${b - 6} 162`, fill: 'none', stroke: '#c9a45c', 'stroke-width': 5, 'stroke-dasharray': '1.5 6', 'stroke-linecap': 'round' }, V);
+}
+for (const x of [110, 395, 685, 970]) { el('circle', { cx: x, cy: 150, r: 14, fill: 'url(#gold)' }, V); }
+el('rect', { x: 100, y: 104, width: 880, height: 8, fill: 'url(#gold)' }, V);
+
+// Chandelier hanging from the centre swag.
+const ch = el('g', { transform: 'translate(540 0)' }, C);
+el('ellipse', { cx: 0, cy: 330, rx: 190, ry: 110, fill: 'url(#lightGlow)' }, ch);
+el('line', { x1: 0, y1: 230, x2: 0, y2: 268, stroke: 'url(#gold)', 'stroke-width': 4 }, ch);
+el('path', { d: 'M-80 300 C-60 340 60 340 80 300', fill: 'none', stroke: 'url(#gold)', 'stroke-width': 6 }, ch);
+el('path', { d: 'M-44 280 C-34 304 34 304 44 280', fill: 'none', stroke: 'url(#gold)', 'stroke-width': 5 }, ch);
+el('path', { d: 'M-6 262 C-6 280 -24 290 -24 312 C-24 336 -8 342 -4 356 L4 356 C8 342 24 336 24 312 C24 290 6 280 6 262Z', fill: 'url(#gold)' }, ch);
+el('path', { d: 'M-118 318 C-90 370 90 370 118 318', fill: 'none', stroke: 'url(#gold)', 'stroke-width': 5 }, ch);
+for (let i = -5; i <= 5; i++) { const x = i * 22, y = 344 + 12 * (1 - (i * i) / 25); el('path', { d: `M${x} ${y} l-5 9 l5 13 l5 -13z`, fill: 'url(#crystal)' }, ch); }
+for (const s of [-1, 1]) el('path', { d: `M0 300 C${s * 40} 300 ${s * 70} 290 ${s * 80} 300`, fill: 'none', stroke: 'url(#gold)', 'stroke-width': 3 }, ch);
+el('circle', { cx: 0, cy: 362, r: 10, fill: 'url(#crystal)' }, ch);
+for (let i = -4; i <= 4; i++) {
+  const x = i * 20, y = 300 + 40 * (1 - (i * i) / 16) * .9 + 5;
+  el('line', { x1: x, y1: y, x2: x, y2: y + 18 + (4 - Math.abs(i)) * 6, stroke: '#d8bd84', 'stroke-width': 1 }, ch);
+  el('path', { d: `M${x} ${y + 18 + (4 - Math.abs(i)) * 6} l-4 7 l4 10 l4 -10z`, fill: 'url(#crystal)' }, ch);
+}
+for (const x of [-80, -44, 44, 80]) {
+  el('rect', { x: x - 3, y: x * x > 2000 ? 284 : 266, width: 6, height: 16, fill: '#fbf3df' }, ch);
+  el('ellipse', { cx: x, cy: (x * x > 2000 ? 278 : 260), rx: 4, ry: 8, fill: '#ffcf5a' }, ch);
+}
+// Bismillah on the valance.
+
+// Red roses at the bottom corners.
+const rO = { grad: 'redPetal', stroke: '#3d0610' };
+const green = ['#2f4a2a', '#3d5c33', '#4e6e3c'];
+for (const [x, y, ang, f] of [[110, 1450, -0.5, 0], [970, 1450, 3.64, 1]]) {
+  sprig(over, R, x, y + 40, ang, 200, { stem: '#2f4a2a', fills: green, size: 40, leaves: 7, flip: !!f });
+  sprig(over, R, x, y + 40, ang - 0.6 * (f ? -1 : 1), 160, { stem: '#2f4a2a', fills: green, size: 36, leaves: 6, flip: !f });
+}
+for (const [x, y, r] of [[150, 1480, 62], [255, 1500, 46], [120, 1380, 44], [215, 1420, 34]]) {
+  rose(over, x, y, r, rO).setAttribute('filter', 'url(#soft)');
+  rose(over, 1080 - x, y, r, rO).setAttribute('filter', 'url(#soft)');
+}
+// thin gold inner frame on the card
+el('rect', { x: 124, y: 124, width: 832, height: 1372, fill: 'none', stroke: 'url(#gold)', 'stroke-width': 2, opacity: .9 }, over);
+</script>
+</body></html>

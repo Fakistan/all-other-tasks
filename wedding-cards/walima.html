@@ -1,0 +1,134 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Walima Card</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root { --sage:#5f7a5c; --ink:#3c4a3a; --gold:#a07a34; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  #card { position:relative; width:1080px; height:1620px; overflow:hidden; background:#8ea088; }
+  svg.layer { position:absolute; inset:0; width:1080px; height:1620px; }
+  #text { position:absolute; left:220px; width:640px; top:238px; text-align:center; color:var(--ink); font-family:'Cormorant Garamond', serif; }
+  .gold { background:linear-gradient(100deg,#7a5420 0%,#c99a4c 30%,#efd595 50%,#b08240 70%,#7a5420 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .ayah { font-family:'Amiri', serif; font-size:96px; line-height:1.35; font-weight:700; }
+  .tr { margin-top:10px; font-size:26px; color:#4e5c4b; line-height:1.3; }
+  .ref { font-size:20px; color:#6d7a69; font-style:italic; }
+  .orn { display:block; margin:24px auto 22px; }
+  .caps { font-family:'Cinzel', serif; font-size:16px; letter-spacing:.3em; color:#55634f; font-weight:500; padding-left:.3em; }
+  .host { font-family:'Cinzel', serif; font-size:30px; font-weight:600; letter-spacing:.08em; color:var(--ink); margin-top:6px; }
+  .host small { font-size:18px; }
+  .invite { font-size:24px; font-style:italic; color:#4e5c4b; line-height:1.3; margin-top:8px; }
+  .walima { font-family:'Pinyon Script', cursive; font-size:96px; line-height:1.05; margin-top:2px; }
+  .name { font-family:'Cinzel', serif; font-size:57px; font-weight:600; letter-spacing:.05em; line-height:1.1; margin-top:2px; }
+  .father { font-size:29px; font-weight:600; color:var(--ink); margin-top:12px; }
+  .father span { font-family:'Cinzel', serif; font-size:15px; letter-spacing:.2em; color:#6d7a69; margin-right:8px; font-weight:500; }
+  .rule { width:420px; height:1px; margin:34px auto; background:linear-gradient(90deg,transparent,#a07a34,transparent); }
+  .date { font-family:'Cinzel', serif; font-size:25px; letter-spacing:.14em; color:var(--ink); font-weight:600; }
+  .times { display:grid; grid-template-columns:1fr 1px 1fr; align-items:center; margin:22px 60px 0; }
+  .times .sep { height:58px; background:linear-gradient(180deg,transparent,#a07a34,transparent); }
+  .times .k { font-family:'Cinzel', serif; font-size:14px; letter-spacing:.32em; color:var(--gold); font-weight:600; padding-left:.32em; }
+  .times .v { font-family:'Cinzel', serif; font-size:20px; letter-spacing:.06em; color:var(--ink); margin-top:4px; font-weight:500; }
+  .venue { font-family:'Cinzel', serif; font-size:27px; letter-spacing:.12em; color:var(--ink); font-weight:600; }
+  .addr { font-size:24px; color:#4e5c4b; margin-top:2px; }
+  .insha { font-family:'Pinyon Script', cursive; font-size:44px; color:var(--sage); margin-top:22px; line-height:1.1; }
+  .rsvp { font-family:'Cinzel', serif; font-size:15.5px; letter-spacing:.2em; color:#55634f; margin-top:14px; font-weight:500; }
+</style></head>
+<body>
+<div id="card">
+  <svg class="layer" id="art" viewBox="0 0 1080 1620"></svg>
+  <div id="text">
+    <div class="ayah gold">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
+    <div class="tr">And We created you in pairs.</div>
+    <div class="ref">(Surah An-Naba 78:8)</div>
+    <svg class="orn" width="220" height="24" viewBox="0 0 220 24"><path d="M0 12 H86 M134 12 H220" stroke="#a07a34" stroke-width="1"/><g fill="none" stroke="#a07a34" stroke-width="1.3"><path d="M110 2 L120 12 L110 22 L100 12Z"/><path d="M110 7 L115 12 L110 17 L105 12Z"/><circle cx="92" cy="12" r="2.4"/><circle cx="128" cy="12" r="2.4"/></g></svg>
+    <div class="caps" style="margin-top:6px">THE FAMILY OF</div>
+    <div class="host">HAJI M. HASSAN <small>(LATE)</small></div>
+    <div class="invite">invite you to grace the auspicious occasion of the</div>
+    <div class="walima gold">Walima</div>
+    <div class="invite" style="margin-top:0">ceremony of their beloved grandson</div>
+    <div class="name gold">HAFIZ AFAQ HASSAN</div>
+    <div class="father"><span>S/O</span>Al Haj M. Ishfaq Hassan</div>
+    <div class="rule"></div>
+    <div class="date">SUNDAY · 22<sup style="font-size:13px">ND</sup> NOVEMBER 2026</div>
+    <div class="times">
+      <div><div class="k">RECEPTION</div><div class="v">6:30 PM</div></div>
+      <div class="sep"></div>
+      <div><div class="k">DINNER</div><div class="v">7:00 – 10:00 PM</div></div>
+    </div>
+    <div class="rule"></div>
+    <div class="venue">ELEGANCE ARENA WEDDING HALL</div>
+    <div class="addr">Opposite The Eclipse, Ring Road, Peshawar</div>
+    <div class="insha">In Sha Allah</div>
+    <div class="rsvp">R.S.V.P · 0331-8889595 &nbsp;|&nbsp; 0332-9595951</div>
+  </div>
+  <svg class="layer" id="over" viewBox="0 0 1080 1620"></svg>
+</div>
+<script src="decor.js"></script>
+<script>
+const R = rng(22112026);
+const art = document.getElementById('art'), over = document.getElementById('over');
+const D = `
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a5420"/><stop offset=".3" stop-color="#e9cf8e"/><stop offset=".55" stop-color="#a87a35"/><stop offset=".8" stop-color="#f3dea6"/><stop offset="1" stop-color="#7a5420"/></linearGradient>
+  <radialGradient id="seal" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f3dca0"/><stop offset=".45" stop-color="#c69a4a"/><stop offset=".85" stop-color="#8a6326"/><stop offset="1" stop-color="#6e4c1c"/></radialGradient>
+  <radialGradient id="sealIn" cx="60%" cy="65%" r="70%"><stop offset="0" stop-color="#e8c97f"/><stop offset=".6" stop-color="#b48838"/><stop offset="1" stop-color="#7d5a22"/></radialGradient>
+  <filter id="linen" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9 .02" numOctaves="2" seed="4" result="a"/><feTurbulence type="fractalNoise" baseFrequency=".02 .9" numOctaves="2" seed="9" result="b"/><feBlend in="a" in2="b" mode="multiply"/><feColorMatrix values="0 0 0 0 .2  0 0 0 0 .28  0 0 0 0 .2  -1.6 0 0 0 1"/></filter>
+  <filter id="paper" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="4" seed="12"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .44  0 0 0 0 .32  1 0 0 0 -.36"/></filter>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="12"/></filter>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="4" dy="16" stdDeviation="18" flood-color="#1e2a1c" flood-opacity=".45"/></filter>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="2" dy="5" stdDeviation="4" flood-color="#1e2a1c" flood-opacity=".4"/></filter>
+  <radialGradient id="pvig" cx="50%" cy="45%" r="60%"><stop offset=".65" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#8a7350" stop-opacity=".25"/></radialGradient>`;
+el('defs', {}, art).innerHTML = D;
+el('defs', {}, over).innerHTML = D;
+
+// Linen backdrop with soft vignette.
+el('rect', { width: 1080, height: 1620, filter: 'url(#linen)', opacity: .55 }, art);
+el('rect', { width: 1080, height: 1620, fill: 'url(#pvig)', opacity: 1.4 }, art);
+el('rect', { x: 72, y: 72, width: 936, height: 1476, fill: 'none', stroke: 'url(#gold)', 'stroke-width': 4 }, art);
+el('rect', { x: 86, y: 86, width: 908, height: 1448, fill: 'none', stroke: 'url(#gold)', 'stroke-width': 1.2 }, art);
+
+// Deckled paper outline: superellipse with slow wobble and fine jitter.
+function paperPath(scale, seed) {
+  const r = rng(seed), pts = [], N = 420, cx = 540, cy = 800, a = 400 * scale, b = 700 * scale;
+  const ph = [r() * 6, r() * 6, r() * 6];
+  for (let i = 0; i < N; i++) {
+    const t = (i / N) * Math.PI * 2, c = Math.cos(t), s = Math.sin(t);
+    const e = 2 / 3.2;
+    let x = a * Math.sign(c) * Math.pow(Math.abs(c), e), y = b * Math.sign(s) * Math.pow(Math.abs(s), e);
+    const w = 1 + .035 * Math.sin(t * 3 + ph[0]) + .025 * Math.sin(t * 7 + ph[1]) + .012 * Math.sin(t * 13 + ph[2]);
+    pts.push([(cx + x * w).toFixed(1), (cy + y * w).toFixed(1)]);
+  }
+  return 'M' + pts.map(p => p.join(' ')).join(' L') + 'Z';
+}
+const gp = paperPath(1.012, 5), pp = paperPath(1, 5);
+el('path', { d: gp, fill: 'url(#gold)', filter: 'url(#shadow)' }, art);
+el('path', { d: gp, fill: 'url(#gold)', filter: 'url(#rough)' }, art);
+el('path', { d: pp, fill: '#f4ecdc', filter: 'url(#rough)' }, art);
+el('clipPath', { id: 'pc' }, art).appendChild(el('path', { d: pp }));
+const P = el('g', { 'clip-path': 'url(#pc)' }, art);
+el('rect', { width: 1080, height: 1620, filter: 'url(#paper)' }, P);
+el('rect', { x: 140, y: 100, width: 800, height: 1400, fill: 'url(#pvig)' }, P);
+
+// Sprigs of sage and gold leaves along both sides.
+const fills = ['#7f9a74', '#93ab86', '#6c8762', 'url(#gold)', '#a9bb98'];
+const dO = { petal: '#fbf7ec', edge: '#d8cfba', center: '#d9a93e', centerEdge: '#a07a34' };
+function side(mirror) {
+  const g = el('g', { transform: mirror ? 'translate(1080 0) scale(-1 1)' : '', filter: 'url(#soft)' }, over);
+  sprig(g, R, 128, 1460, -1.6, 760, { stem: '#6c7f5c', fills, size: 58, leaves: 18, curve: -.12, ratio: .26, spread: .9 });
+  sprig(g, R, 118, 1430, -1.3, 250, { stem: '#8a6a30', fills: ['url(#gold)', '#c9a45c'], size: 40, leaves: 8, curve: -.4, ratio: .3 });
+  sprig(g, R, 112, 1300, -1.85, 300, { stem: '#6c7f5c', fills, size: 46, leaves: 9, curve: .2, ratio: .22 });
+  sprig(g, R, 125, 1470, -0.35, 200, { stem: '#6c7f5c', fills, size: 40, leaves: 7, curve: .3, ratio: .26 });
+  for (const [x, y, r] of [[150, 1240, 30], [118, 1030, 22], [178, 1400, 25], [128, 780, 18]]) daisy(g, x, y, r, dO);
+}
+side(false); side(true);
+
+// Gold wax seal with monogram, overlapping the bottom edge.
+const sx = 540, sy = 1490;
+const S = el('g', { filter: 'url(#soft)' }, over);
+const blob = []; for (let i = 0; i < 60; i++) { const t = i / 60 * Math.PI * 2, rr = 92 + 6 * Math.sin(t * 5 + 1) + 4 * Math.sin(t * 9); blob.push(`${(sx + Math.cos(t) * rr).toFixed(1)} ${(sy + Math.sin(t) * rr).toFixed(1)}`); }
+el('path', { d: 'M' + blob.join(' L') + 'Z', fill: 'url(#seal)' }, S);
+el('circle', { cx: sx, cy: sy, r: 66, fill: 'url(#sealIn)', stroke: '#7d5a22', 'stroke-width': 2 }, S);
+el('circle', { cx: sx, cy: sy, r: 58, fill: 'none', stroke: '#f3dca0', 'stroke-width': 1.5, opacity: .8 }, S);
+const mono = el('text', { x: sx, y: sy + 18, 'text-anchor': 'middle', 'font-family': 'Cinzel', 'font-weight': 700, 'font-size': 50, fill: '#6e4c1c', 'letter-spacing': 2 }, S);
+mono.textContent = 'AH';
+const mono2 = el('text', { x: sx - 1.5, y: sy + 16.5, 'text-anchor': 'middle', 'font-family': 'Cinzel', 'font-weight': 700, 'font-size': 50, fill: '#f6e2ae', 'letter-spacing': 2, opacity: .7 }, S);
+mono2.textContent = 'AH';
+</script>
+</body></html>

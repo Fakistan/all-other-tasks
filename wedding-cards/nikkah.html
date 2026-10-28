@@ -1,0 +1,204 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Nikkah Card</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root { --emerald:#0f3a2c; --ink:#1f3b2f; --gold:#a8823f; --gold2:#c9a45c; --paper:#f5eddd; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:#061510; }
+  #card { position:relative; width:1080px; height:1620px; overflow:hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 45%, #1e4d3c 0%, #0d2b21 55%, #06160f 100%); }
+  svg.layer { position:absolute; inset:0; width:1080px; height:1620px; }
+  #text { position:absolute; left:190px; width:700px; top:250px; text-align:center; color:var(--ink);
+    font-family:'Cormorant Garamond', serif; }
+  .gold { background:linear-gradient(100deg,#8a6526 0%,#c9a45c 30%,#e9d39a 50%,#b48a42 70%,#8a6526 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .bism { font-family:'Amiri', serif; font-size:44px; line-height:1.2; }
+  .caps { font-family:'Cinzel', serif; letter-spacing:.28em; font-size:16.5px; line-height:1.9; font-weight:500; color:#3d5347; }
+  .divider { display:flex; align-items:center; justify-content:center; gap:14px; margin:16px auto; }
+  .divider i { display:block; width:120px; height:1px; background:linear-gradient(90deg,transparent,var(--gold)); }
+  .divider i:last-child { transform:scaleX(-1); }
+  .divider b { color:var(--gold); font-size:20px; font-weight:400; }
+  h1 { font-family:'Cinzel', serif; font-weight:500; font-size:118px; letter-spacing:.09em; line-height:1; color:var(--emerald); margin-top:2px; padding-left:.09em; }
+  .of { font-family:'Cinzel', serif; font-size:19px; letter-spacing:.4em; color:#5a6b60; margin:10px 0 0; padding-left:.4em; }
+  .name { font-family:'Pinyon Script', cursive; font-size:104px; line-height:1.25; margin-top:-4px; padding:0 20px; }
+  .son { font-family:'Cinzel', serif; font-size:15px; letter-spacing:.35em; color:#6b7a70; margin-top:0; }
+  .father { font-size:36px; font-weight:600; color:var(--ink); margin-top:2px; letter-spacing:.01em; }
+  .flourish { margin:6px auto 0; display:block; }
+  .dua { font-family:'Cinzel', serif; font-size:15.5px; letter-spacing:.2em; line-height:1.85; color:#4b5d52; margin-top:10px; }
+  .details { display:grid; grid-template-columns:1fr 1px 1.05fr 1px 1.15fr; margin:34px 6px 0; align-items:start; }
+  .details .sep { background:linear-gradient(180deg,transparent,var(--gold2),transparent); height:150px; }
+  .col { padding:0 10px; }
+  .col svg { width:38px; height:38px; display:block; margin:0 auto 8px; }
+  .lbl { font-family:'Cinzel', serif; font-size:15px; letter-spacing:.3em; color:var(--gold); font-weight:600; padding-left:.3em; }
+  .val { font-family:'Cinzel', serif; font-size:17.5px; letter-spacing:.08em; line-height:1.55; color:var(--ink); margin-top:8px; font-weight:500; }
+  .sub { font-size:19px; font-style:italic; color:#5a6b60; margin-top:2px; }
+  .addr { font-family:'Cinzel', serif; font-size:15px; letter-spacing:.18em; color:#4b5d52; margin-top:22px; }
+  .love { font-family:'Pinyon Script', cursive; font-size:50px; line-height:1.1; color:var(--gold); margin-top:4px; }
+  .family { font-family:'Cinzel', serif; font-size:16px; letter-spacing:.26em; color:var(--ink); margin-top:6px; font-weight:600; }
+  .contact { font-family:'Cinzel', serif; font-size:17px; color:#4b5d52; margin-top:16px; letter-spacing:.12em; font-weight:500; }
+  .bism { font-size:52px; }
+</style></head>
+<body>
+<div id="card">
+  <svg class="layer" id="back" viewBox="0 0 1080 1620"></svg>
+  <svg class="layer" id="panel" viewBox="0 0 1080 1620">
+    <defs>
+      <path id="arch" d="M150 1505 L150 405 C150 305 228 272 330 242 C440 208 500 172 540 112 C580 172 640 208 750 242 C852 272 930 305 930 405 L930 1505 Z"/>
+      <clipPath id="archClip"><use href="#arch"/></clipPath>
+      <filter id="paper" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="4" seed="3"/>
+        <feColorMatrix values="0 0 0 0 .42  0 0 0 0 .33  0 0 0 0 .2  1 0 0 0 -.38"/>
+      </filter>
+      <filter id="fibre" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".012 .05" numOctaves="3" seed="8"/>
+        <feColorMatrix values="0 0 0 0 .55  0 0 0 0 .45  0 0 0 0 .3  1.2 0 0 0 -.55"/>
+      </filter>
+      <radialGradient id="vig" cx="50%" cy="48%" r="62%">
+        <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#6b4f22" stop-opacity=".28"/>
+      </radialGradient>
+      <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#8a6526"/><stop offset=".35" stop-color="#e3c98a"/>
+        <stop offset=".6" stop-color="#b48a42"/><stop offset="1" stop-color="#e3c98a"/>
+      </linearGradient>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity=".55"/>
+      </filter>
+    </defs>
+    <use href="#arch" fill="#f5eddd" filter="url(#shadow)"/>
+    <g clip-path="url(#archClip)">
+      <rect width="1080" height="1620" filter="url(#paper)"/>
+      <rect width="1080" height="1620" filter="url(#fibre)" opacity=".5"/>
+      <rect x="150" y="112" width="780" height="1393" fill="url(#vig)"/>
+    </g>
+    <use href="#arch" fill="none" stroke="url(#goldLine)" stroke-width="3"/>
+    <use href="#arch" fill="none" stroke="url(#goldLine)" stroke-width="2.2" transform="translate(540 808) scale(.946 .966) translate(-540 -808)"/>
+    <use href="#arch" fill="none" stroke="url(#goldLine)" stroke-width="1" opacity=".8" transform="translate(540 808) scale(.93 .955) translate(-540 -808)"/>
+  </svg>
+  <svg class="layer" id="front" viewBox="0 0 1080 1620"></svg>
+
+  <div id="text">
+    <div class="bism gold">بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيْمِ</div>
+    <div class="caps" style="margin-top:14px">Together with their families<br>you are cordially invited to the</div>
+    <div class="divider"><i></i><b>❖</b><i></i></div>
+    <h1>NIKKAH</h1>
+    <div class="of">OF</div>
+    <div class="name gold">Hafiz Afaq Hassan</div>
+    <div class="son">SON OF</div>
+    <div class="father">Al Haj M. Ishfaq Hassan</div>
+    <svg class="flourish" width="300" height="34" viewBox="0 0 300 34"><path d="M10 20 C70 20 90 8 140 18 C160 22 165 10 150 10 C138 10 142 26 158 24 C190 20 230 22 290 18" fill="none" stroke="#a8823f" stroke-width="1.4"/><path d="M150 17 c-6 -8 -16 -2 -10 6 l10 8 l10 -8 c6 -8 -4 -14 -10 -6z" fill="none" stroke="#a8823f" stroke-width="1.2" transform="translate(100 -6) scale(.55)"/></svg>
+    <div class="dua">May Allah bless them both and<br>unite them in goodness, love &amp; barakah</div>
+
+    <div class="details">
+      <div class="col">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#a8823f" stroke-width="1.6"><rect x="6" y="9" width="28" height="25" rx="3"/><path d="M6 16h28M13 5v7M27 5v7"/><g fill="#a8823f" stroke="none"><circle cx="13" cy="22" r="1.5"/><circle cx="20" cy="22" r="1.5"/><circle cx="27" cy="22" r="1.5"/><circle cx="13" cy="28" r="1.5"/><circle cx="20" cy="28" r="1.5"/></g></svg>
+        <div class="lbl">DATE</div>
+        <div class="val">THURSDAY<br>19 NOVEMBER<br>2026</div>
+      </div>
+      <div class="sep"></div>
+      <div class="col">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#a8823f" stroke-width="1.6"><circle cx="20" cy="20" r="14"/><path d="M20 11v9l6 4"/></svg>
+        <div class="lbl">TIME</div>
+        <div class="val">7:00 PM</div>
+        <div class="sub">In Sha Allah</div>
+      </div>
+      <div class="sep"></div>
+      <div class="col">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#a8823f" stroke-width="1.6"><path d="M20 36s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="16" r="4"/></svg>
+        <div class="lbl">VENUE</div>
+        <div class="val">SERENA ROYAL<br>WEDDING HALL</div>
+      </div>
+    </div>
+    <div class="addr">NEAR PRIME HOSPITAL · WARSAK ROAD · PESHAWAR</div>
+    <div class="divider" style="margin-top:20px"><i></i><b>❖</b><i></i></div>
+    <div class="love">With Love,</div>
+    <div class="family">THE HASSAN FAMILY</div>
+    <div class="contact">0331-8889595 &nbsp;|&nbsp; 0332-9595951</div>
+  </div>
+</div>
+
+<script src="decor.js"></script>
+<script>
+const R = rng(19112026);
+const back = document.getElementById('back'), front = document.getElementById('front');
+const defs = el('defs', {}, back);
+defs.innerHTML = `
+  <linearGradient id="creamPetal" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#cbbd9e"/><stop offset=".55" stop-color="#efe6d2"/><stop offset="1" stop-color="#fffaf0"/></linearGradient>
+  <linearGradient id="fabric" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#08241a"/><stop offset=".35" stop-color="#1c5641"/><stop offset=".55" stop-color="#0c3326"/><stop offset=".8" stop-color="#20604a"/><stop offset="1" stop-color="#0a2a1f"/></linearGradient>
+  <linearGradient id="goldFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d5a22"/><stop offset=".3" stop-color="#e6cc8c"/><stop offset=".55" stop-color="#a77e38"/><stop offset=".8" stop-color="#f0dca6"/><stop offset="1" stop-color="#8a6526"/></linearGradient>
+  <radialGradient id="pearl" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#f1ece2"/><stop offset="1" stop-color="#b9ae9c"/></radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffd98a" stop-opacity=".55"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="flame" cx="50%" cy="70%" r="60%"><stop offset="0" stop-color="#fff6d0"/><stop offset=".5" stop-color="#ffc54d"/><stop offset="1" stop-color="#ff8a1a" stop-opacity="0"/></radialGradient>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000" flood-opacity=".45"/></filter>
+  <filter id="velvet" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="3" seed="2"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 .1  0 0 0 0 .05  0 0 0 -1.4 .9"/></filter>`;
+front.appendChild(defs.cloneNode(true));
+el('rect', { width: 1080, height: 1620, filter: 'url(#velvet)', opacity: .35 }, back);
+
+// Embroidered dupatta drapes on the left.
+function drape(g, d, edge) {
+  el('path', { d, fill: 'url(#fabric)', opacity: .97, filter: 'url(#soft)' }, g);
+  el('path', { d: edge, fill: 'none', stroke: '#c9a45c', 'stroke-width': 3.2, 'stroke-dasharray': '0 10', 'stroke-linecap': 'round' }, g);
+  el('path', { d: edge, fill: 'none', stroke: '#b48a42', 'stroke-width': 1.2, transform: 'translate(10 8)', opacity: .8 }, g);
+}
+drape(back, 'M0 330 C80 380 120 520 100 700 C90 820 40 900 0 940 Z', 'M0 340 C78 390 118 520 98 700 C88 818 40 896 0 934');
+drape(front, 'M0 1130 C120 1180 230 1300 260 1440 C280 1530 330 1590 380 1620 L0 1620 Z', 'M0 1136 C118 1186 226 1304 256 1442 C276 1530 326 1588 374 1620');
+drape(back, 'M0 0 L360 0 C300 60 200 90 130 160 C80 210 40 260 0 280 Z', 'M356 0 C298 58 200 88 128 158 C78 208 38 258 0 278');
+
+// Lantern on a gold tray, top right.
+const lan = el('g', { transform: 'translate(985 150)' }, back);
+el('ellipse', { cx: 0, cy: 20, rx: 220, ry: 200, fill: 'url(#glow)' }, lan);
+el('ellipse', { cx: 0, cy: 150, rx: 120, ry: 26, fill: 'url(#goldFill)', filter: 'url(#soft)' }, lan);
+el('ellipse', { cx: 0, cy: 146, rx: 104, ry: 18, fill: '#6f5020', opacity: .5 }, lan);
+el('path', { d: 'M-58 140 L-62 -10 L62 -10 L58 140 Z', fill: 'rgba(255,220,150,.22)', stroke: 'url(#goldFill)', 'stroke-width': 7 }, lan);
+for (const x of [-20, 20]) el('line', { x1: x, y1: -10, x2: x * .95, y2: 140, stroke: 'url(#goldFill)', 'stroke-width': 4 }, lan);
+el('path', { d: 'M-70 -10 C-60 -60 -20 -80 0 -120 C20 -80 60 -60 70 -10 Z', fill: 'url(#goldFill)' }, lan);
+el('circle', { cx: 0, cy: -132, r: 13, fill: 'none', stroke: 'url(#goldFill)', 'stroke-width': 5 }, lan);
+el('rect', { x: -72, y: -16, width: 144, height: 12, rx: 3, fill: 'url(#goldFill)' }, lan);
+el('rect', { x: -66, y: 134, width: 132, height: 12, rx: 3, fill: 'url(#goldFill)' }, lan);
+el('rect', { x: -14, y: 80, width: 28, height: 54, rx: 3, fill: '#f6efdf' }, lan);
+el('ellipse', { cx: 0, cy: 62, rx: 12, ry: 22, fill: 'url(#flame)' }, lan);
+el('ellipse', { cx: 0, cy: 66, rx: 4, ry: 9, fill: '#fffbe8' }, lan);
+
+// Gold bowl of pearls, bottom right.
+const bowl = el('g', { transform: 'translate(1010 1470)' }, front);
+el('ellipse', { cx: 0, cy: 0, rx: 190, ry: 70, fill: 'url(#goldFill)', filter: 'url(#soft)' }, bowl);
+el('ellipse', { cx: 0, cy: -6, rx: 168, ry: 56, fill: '#5e431a' }, bowl);
+for (let i = 0; i < 120; i++) {
+  const a = R() * Math.PI * 2, rr = Math.sqrt(R());
+  el('circle', { cx: Math.cos(a) * 150 * rr, cy: -10 + Math.sin(a) * 46 * rr - (1 - rr) * 14, r: 7 + R() * 5, fill: 'url(#pearl)' }, bowl);
+}
+// pearl strand spilling out
+for (let i = 0; i < 26; i++) {
+  const t = i / 25;
+  el('circle', { cx: -180 - t * 120 + Math.sin(t * 6) * 18, cy: 30 + t * 110, r: 8, fill: 'url(#pearl)', filter: 'url(#soft)' }, bowl);
+}
+
+// Greenery and florals.
+const green = ['#2e5a3f', '#3f7150', '#24493a', '#557f5a'];
+const gyO = { stem: '#7d8b6a', petal: '#fbf8f0', edge: '#d9d2c2', center: '#e8dfc4', r: 6 };
+function cluster(g, x, y, ang, spread, n, len) {
+  for (let i = 0; i < n; i++) gyp(g, R, x, y, ang + (R() - .5) * spread, len * (.8 + R() * .4), 3, gyO);
+}
+// top-left corner
+sprig(back, R, 0, 120, -0.2, 300, { stem: '#2d4a36', fills: green, size: 56, leaves: 10 });
+sprig(back, R, 60, 0, 1.0, 260, { stem: '#2d4a36', fills: green, size: 48, flip: true });
+cluster(front, 40, 40, 0.75, 1.4, 9, 70);
+cluster(front, 230, 30, 1.6, 1.4, 5, 60);
+rose(front, 105, 135, 78, { grad: 'creamPetal', stroke: '#bfae8b' });
+rose(front, 250, 55, 46, { grad: 'creamPetal', stroke: '#bfae8b' });
+cluster(front, 140, 220, 0.9, 1.2, 4, 55);
+// right edge greenery
+for (const [y, a] of [[430, 2.6], [620, 3.3], [820, 2.9], [1030, 3.4]]) sprig(back, R, 1080, y, a, 230, { stem: '#2d4a36', fills: green, size: 52, leaves: 8, flip: y > 700 });
+cluster(front, 1080, 560, 3.1, 1.2, 5, 60);
+cluster(front, 1080, 960, 3.3, 1.2, 4, 55);
+// left middle
+cluster(back, 0, 980, -0.2, 1.4, 6, 70);
+sprig(back, R, 0, 1060, -0.6, 230, { stem: '#2d4a36', fills: green, size: 50, leaves: 8 });
+// bottom-left
+cluster(front, 60, 1590, -1.0, 1.4, 10, 80);
+cluster(front, 300, 1620, -1.4, 1.2, 6, 70);
+rose(front, 140, 1500, 72, { grad: 'creamPetal', stroke: '#bfae8b' });
+sprig(front, R, 0, 1400, -0.3, 200, { stem: '#2d4a36', fills: green, size: 46, leaves: 7 });
+cluster(front, 860, 1620, -1.9, 1.2, 6, 70);
+</script>
+</body></html>
